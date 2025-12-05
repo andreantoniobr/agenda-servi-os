@@ -1,25 +1,25 @@
 import { connectDB } from "@/lib/mongodb";
-import Agendamento from "@/models/agendamento";
+import Profissional from "@/models/profissional";
 import { NextResponse } from "next/server";
 
-// Criar Agendamento (POST)
+// Criar novo profissional
 export async function POST(req: Request) {
   try {
     await connectDB();
     const data = await req.json();
-    const agendamento = await Agendamento.create(data);
-    return NextResponse.json(agendamento);
+    const novoProfissional = await Profissional.create(data);
+    return NextResponse.json(novoProfissional);
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
 
-// Listar Agendamentos (GET)
+// Listar todos profissionais
 export async function GET() {
   try {
     await connectDB();
-    const lista = await Agendamento.find();
-    return NextResponse.json(lista);
+    const profissionais = await Profissional.find();
+    return NextResponse.json(profissionais);
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }

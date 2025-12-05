@@ -68,13 +68,3 @@ npm run dev
 
 
 Acesse: http://localhost:3000
-
-📌 Observações
-
-As telas de frontend estão preparadas (cadastro, dashboard, agendamentos).
-
-O login ainda precisa ser implementado.
-
-A API de usuários está criada, mas a integração com MongoDB Atlas deve ser testada.
-
-O front-end pode ser desenvolvido mesmo antes da conexão com o banco estar pronta.
