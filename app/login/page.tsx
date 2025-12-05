@@ -7,7 +7,6 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder: futuramente vai chamar a API de login
     console.log("Login enviado:", form);
   };
 
@@ -17,10 +16,12 @@ export default function LoginPage() {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           className="border p-2 rounded"
+          type="email"
           placeholder="Email"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
+
         <input
           className="border p-2 rounded"
           type="password"
@@ -28,6 +29,7 @@ export default function LoginPage() {
           value={form.senha}
           onChange={(e) => setForm({ ...form, senha: e.target.value })}
         />
+
         <button className="bg-blue-500 text-white p-2 rounded" type="submit">
           Entrar
         </button>
