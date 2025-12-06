@@ -1,64 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function Cadastro() {
-  const [form, setForm] = useState({
-    nome: "",
-    email: "",
-    senha: "",
-  });
+export default function CadastroPage() {
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const res = await fetch("/api/usuarios", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json", // IMPORTANTE
-      },
-      body: JSON.stringify(form),
-    });
-
-    const data = await res.json();
-    console.log("Resposta API:", data);
+    alert(`Cadastro enviado!\nNome: ${nome}\nEmail: ${email}`);
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-md">
-      <h1 className="text-2xl font-bold mb-4">Cadastro</h1>
-
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          className="border p-2 rounded"
-          placeholder="Nome"
-          value={form.nome}
-          onChange={(e) => setForm({ ...form, nome: e.target.value })}
-        />
-
-        <input
-          className="border p-2 rounded"
-          type="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-        />
-
-        <input
-          className="border p-2 rounded"
-          type="password"
-          placeholder="Senha"
-          value={form.senha}
-          onChange={(e) => setForm({ ...form, senha: e.target.value })}
-        />
-
-        <button
-          type="submit"
-          className="bg-green-500 text-white p-2 rounded"
-        >
-          Cadastrar
-        </button>
-      </form>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
+      <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
+        <h1 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">
+          Cadastro
+        </h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            placeholder="Nome"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
+          />
+          <input
+            type="password"
+            placeholder="Senha"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
+          />
+          <button
+            type="submit"
+            className="w-full bg-purple-600 text-white p-3 rounded-lg hover:bg-purple-700 transition-colors"
+          >
+            Cadastrar
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
