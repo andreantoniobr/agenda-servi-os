@@ -1,33 +1,44 @@
+import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Usuario from "@/models/usuario";
-import { NextResponse } from "next/server";
+import { authMiddleware } from "@/lib/authMiddleware";
 
-export async function POST(req: Request) {
-  try {
-    await connectDB();
+// GET – listar usuários (protegido)
+export async function GET(req: NextRequest) {
+  const middlewareResponse = authMiddleware(req);
+  if (middlewareResponse) return middlewareResponse;
 
-    const data = await req.json();
-    const novoUsuario = await Usuario.create(data);
-
-    return NextResponse.json(novoUsuario);
-  } catch (err: any) {
-    return NextResponse.json(
-      { error: err.message },
-      { status: 500 }
-    );
-  }
+  await connectDB();
+  const usuarios = await Usuario.find();
+  return NextResponse.json(usuarios);
 }
 
-export async function GET() {
-  try {
-    await connectDB();
+// POST – criar usuário
+export async function POST(req: NextRequest) {
+  await connectDB();
+  const data = await req.json();
+  const novoUsuario = await Usuario.create(data);
+  return NextResponse.json(novoUsuario);
+}
 
-    const usuarios = await Usuario.find();
-    return NextResponse.json(usuarios);
-  } catch (err: any) {
-    return NextResponse.json(
-      { error: err.message },
-      { status: 500 }
-    );
-  }
+// PATCH – atualizar usuário (protegido)
+export async function PATCH(req: NextRequest) {
+  const middlewareResponse = authMiddleware(req);
+  if (middlewareResponse) return middlewareResponse;
+
+  await connectDB();
+  const { id, ...rest } = await req.json();
+  const usuario = await Usuario.findByIdAndUpdate(id, rest, { new: true });
+  return NextResponse.json(usuario);
+}
+
+// DELETE – remover usuário (protegido)
+export async function DELETE(req: NextRequest) {
+  const middlewareResponse = authMiddleware(req);
+  if (middlewareResponse) return middlewareResponse;
+
+  await connectDB();
+  const { id } = await req.json();
+  await Usuario.findByIdAndDelete(id);
+  return NextResponse.json({ message: "Usuário deletado" });
 }

@@ -1,26 +1,43 @@
+import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Profissional from "@/models/profissional";
-import { NextResponse } from "next/server";
+import { authMiddleware } from "@/lib/authMiddleware";
 
-// Criar novo profissional
-export async function POST(req: Request) {
-  try {
-    await connectDB();
-    const data = await req.json();
-    const novoProfissional = await Profissional.create(data);
-    return NextResponse.json(novoProfissional);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
-  }
+export async function GET(req: NextRequest) {
+  const middlewareResponse = authMiddleware(req);
+  if (middlewareResponse) return middlewareResponse;
+
+  await connectDB();
+  const profissionais = await Profissional.find();
+  return NextResponse.json(profissionais);
 }
 
-// Listar todos profissionais
-export async function GET() {
-  try {
-    await connectDB();
-    const profissionais = await Profissional.find();
-    return NextResponse.json(profissionais);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
-  }
+export async function POST(req: NextRequest) {
+  const middlewareResponse = authMiddleware(req);
+  if (middlewareResponse) return middlewareResponse;
+
+  await connectDB();
+  const data = await req.json();
+  const novoProfissional = await Profissional.create(data);
+  return NextResponse.json(novoProfissional);
+}
+
+export async function PATCH(req: NextRequest) {
+  const middlewareResponse = authMiddleware(req);
+  if (middlewareResponse) return middlewareResponse;
+
+  await connectDB();
+  const { id, ...rest } = await req.json();
+  const profissional = await Profissional.findByIdAndUpdate(id, rest, { new: true });
+  return NextResponse.json(profissional);
+}
+
+export async function DELETE(req: NextRequest) {
+  const middlewareResponse = authMiddleware(req);
+  if (middlewareResponse) return middlewareResponse;
+
+  await connectDB();
+  const { id } = await req.json();
+  await Profissional.findByIdAndDelete(id);
+  return NextResponse.json({ message: "Profissional deletado" });
 }
