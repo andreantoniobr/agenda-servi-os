@@ -2,15 +2,16 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import dbConnect from "@/lib/db";
-import JobCategory from "@/models/job-category";
-import CategoryForm from "@/components/CategoryForm";
+import AppointmentForm from "@/components/AppointmentForm";
+import Appointment from "@/models/appointment";
 import { Types } from "mongoose";
 import DashboardContent from "@/components/molecules/dashboardContent";
+
 interface Params {
   params: Promise<{ id: string }>;
 }
 
-export default async function EditCategoryPage({ params }: Params) {
+export default async function EditAppointmentPage({ params }: Params) {
   const resolvedParams = await params;
   const { id } = resolvedParams;
 
@@ -21,29 +22,32 @@ export default async function EditCategoryPage({ params }: Params) {
 
   console.log("ID recebido na URL:", id);
 
-  let category;
+  let appointment;
   try {
     // Converte o id para ObjectId para evitar problemas de tipo
-    category = await JobCategory.findOne({
+    appointment = await Appointment.findOne({
       _id: new Types.ObjectId(id),
       userId: (session.user as any).id,
     }).lean();
   } catch (error) {
-    redirect("/dashboard/categories");
+    redirect("/dashboard");
   }
 
-  if (!category) redirect("/dashboard/categories");
+  if (!appointment) redirect("/dashboard");
 
   return (
     <DashboardContent>
       <div className="bg-white p-8 rounded-lg flex max-w-full flex-auto flex-col">
         <div className="p-8">
-          <h1 className="text-2xl font-bold mb-6">Editar Categoria</h1>
-          <CategoryForm
+          <h1 className="text-2xl font-bold mb-6">Editar Agendamento</h1>
+          <AppointmentForm
+            userId={(session.user as any).id}
             initialData={{
               id: id,
-              name: category.name,
-              description: category.description || "",
+              title: appointment.title,
+              description: appointment.description || "",
+              date: appointment.date,
+              time: appointment.time,
             }}
           />
         </div>

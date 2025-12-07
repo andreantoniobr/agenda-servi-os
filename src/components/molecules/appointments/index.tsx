@@ -1,15 +1,14 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { updateCategory, deleteCategory } from "@/app/actions";
+import { updateAppointment, deleteAppointment } from "@/actions/appointment";
 import dbConnect from "@/lib/db";
 import Appointment from "@/models/appointment";
-import { FaRegTrashAlt, FaPencilAlt } from "react-icons/fa";
 import Button from "@/components/atoms/button";
 import EditButton from "@/components/atoms/editButtom";
 import DeleteButton from "@/components/atoms/deleteButtom";
 
-export default async function CategoriesDashboard() {
+export default async function AppointmentsDashboard() {
   const session = await getServerSession(authOptions);
   if (!session) redirect("/login");
 
@@ -42,10 +41,16 @@ export default async function CategoriesDashboard() {
             <thead>
               <tr className="border-b-2 border-slate-100">
                 <th className="px-3 py-2 text-start text-sm font-semibold uppercase tracking-wider text-slate-700">
-                  Nome
+                  Título
                 </th>
                 <th className="hidden px-3 py-2 text-start text-sm font-semibold uppercase tracking-wider text-slate-700 md:table-cell">
                   Descrição
+                </th>
+                <th className="px-3 py-2 text-start text-sm font-semibold uppercase tracking-wider text-slate-700 md:table-cell">
+                  Data
+                </th>
+                <th className="px-3 py-2 text-start text-sm font-semibold uppercase tracking-wider text-slate-700 md:table-cell">
+                  Hora
                 </th>
                 <th className="px-3 py-2 text-end text-sm font-semibold uppercase tracking-wider text-slate-700">
                   Ações
@@ -53,16 +58,13 @@ export default async function CategoriesDashboard() {
               </tr>
             </thead>
             <tbody>        
-          
-
-
               {appointments.map((appointment, index) => (
                 <tr
                   key={appointment._id.toString()}
                   className={`hover:bg-(--third-color) ${index % 2 === 1 ? "bg-(--second-color)" : ""}`}
                 >
                   <td className="p-3 text-start font-medium">
-                    {appointment.name}
+                    {appointment.title}
                     <div className="text-xs text-slate-500 mt-1 md:hidden">
                       {appointment.description || "Sem descrição"}
                     </div>
@@ -70,10 +72,16 @@ export default async function CategoriesDashboard() {
                   <td className="hidden p-3 text-slate-600 md:table-cell">
                     {appointment.description || "Sem descrição"}
                   </td>
+                  <td className="hidden p-3 text-slate-600 md:table-cell">
+                    {appointment.date}
+                  </td>
+                  <td className="hidden p-3 text-slate-600 md:table-cell">
+                    {appointment.time}
+                  </td>
                   <td className="p-3 text-end">
                     <div className="flex justify-end space-x-2">
-                      <EditButton id={appointment._id.toString()} />
-                      <DeleteButton id={appointment._id.toString()} action={deleteCategory} />                      
+                      <EditButton id={appointment._id.toString()}  basePath="/dashboard/appointments/" />
+                      <DeleteButton id={appointment._id.toString()} action={deleteAppointment} />                      
                     </div>
                   </td>
                 </tr>
@@ -81,7 +89,6 @@ export default async function CategoriesDashboard() {
             </tbody>
           </table>
 
-          
           {appointments.length === 0 && (
             <div className="text-center py-8 text-slate-500">
               Nenhum agendamento encontrado. Crie seu primeiro agendamento!

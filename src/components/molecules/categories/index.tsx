@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { updateCategory, deleteCategory } from "@/app/actions";
+import { updateCategory, deleteCategory } from "@/actions/category";
 import dbConnect from "@/lib/db";
 import JobCategory from "@/models/job-category";
 import { FaRegTrashAlt, FaPencilAlt } from "react-icons/fa";

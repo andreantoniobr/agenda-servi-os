@@ -42,7 +42,7 @@ export default function DashboardHeader({ userName }: DashboardHeaderProps) {
           {/* Right Section */}
           <div className="flex items-center gap-1 lg:gap-5">
             <div className="hidden items-center gap-2 lg:flex">
-              <DashboardHeaderLink href="/dashboard" text="Serviços" />
+              <DashboardHeaderLink href="/dashboard" text="Agendamentos" />
               <DashboardHeaderLink
                 href="/dashboard/categories"
                 text="Categorias"
@@ -106,7 +106,7 @@ export default function DashboardHeader({ userName }: DashboardHeaderProps) {
         {mobileNavOpen && (
           <nav className="flex flex-col py-4 lg:hidden">
             <Button variant="white" to="/dashboard" className="w-full justify-start">
-              Serviços
+              Agendamentos
             </Button>
 
             <hr className="h-5 border-0" />

@@ -5,7 +5,7 @@ import { FiCalendar, FiClock, FiCheckCircle } from "react-icons/fi";
 
 export default function AgendamentosPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-orange-50 p-6">
+    <div className="min-h-screen bg-linear-to-br from-yellow-50 to-orange-50 p-6">
       <h1 className="text-4xl font-extrabold text-gray-800 mb-6">Meus Agendamentos</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

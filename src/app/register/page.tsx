@@ -1,6 +1,6 @@
 'use client';
 
-import { registerUser } from "../actions";
+import { registerUser } from "../../actions/user";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import  Button  from "@/components/atoms/button";
