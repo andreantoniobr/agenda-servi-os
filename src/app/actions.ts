@@ -51,7 +51,11 @@ export async function addCategory(formData: FormData) {
     revalidatePath("/dashboard/categories");
 
     return { success: true };
-  } catch (error: any) {    
+  } catch (error: any) {
+    // Trata erro de duplicidade ou outros erros do Mongoose
+    if (error.code === 11000) {
+      return { error: "Já existe uma categoria com este nome." };
+    }
     return { error: "Erro ao criar categoria." };
   }
 }
@@ -69,11 +73,10 @@ export async function deleteCategory(formData: FormData) {
   return { success: true };
 }
 
-export async function updateCategory(formData: FormData) {
+export async function updateCategory(id: string, formData: FormData) {
   const session = await getServerSession(authOptions);
   if (!session) return { error: "Não autorizado" };
-
-  const id = formData.get("id");
+  
   const name = formData.get("name");
   const description = formData.get("description");
 

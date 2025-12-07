@@ -1,11 +1,13 @@
-'use client'
+'use client';
+
 import { registerUser } from "../actions";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import  Button  from "@/components/atoms/button";
 import { Input } from "@/components/ui/input";
 import { UserPlus, Mail, Lock, User } from "lucide-react";
+import Image from "next/image";
+import Logo from "@/components/atoms/logo";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -21,22 +23,29 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center bg-linear-to-br from-gray-50 to-gray-100 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="flex justify-center mb-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-              <UserPlus className="h-6 w-6 text-green-600" />
-            </div>
-          </div>
-          <CardTitle className="text-2xl">Criar Conta</CardTitle>
-          <CardDescription>
-            Preencha os dados para criar sua conta
-          </CardDescription>
-        </CardHeader>
-        
-        <CardContent>
-          <form action={clientAction} className="space-y-4">
+ <div className="h-screen flex">
+      {/* Lado esquerdo: imagem centralizada */}
+      <div className="hidden md:flex w-2/3 bg-gray-50 justify-center items-center">
+        <div className="relative w-2/3 h-2/3">
+          <Image
+            src="/images/register.svg"
+            alt="Login"
+            fill
+            className="object-contain"
+          />
+        </div>
+      </div>
+
+      {/* Lado direito: formulário de login */}
+      <div className="flex w-full md:w-1/3 justify-center items-center bg-white">
+        <div className="w-4/5 max-w-md p-8">
+          <Link href="/" className="flex mb-10">
+            <Logo size="lg" />
+          </Link>
+
+          <h2 className="text-2xl font-bold mb-8">Criar uma nova conta</h2>         
+
+<form action={clientAction} className="space-y-4">
             <div className="relative">
               <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
               <Input 
@@ -68,19 +77,21 @@ export default function RegisterPage() {
                 required 
                 className="pl-10"
               />
-            </div>
-            
-            <Button className="w-full bg-green-600 hover:bg-green-700">
-              <UserPlus className="mr-2 h-4 w-4" />
-              Registrar
-            </Button>
-          </form>
+            </div> 
 
-          <div className="mt-6 text-center text-sm">
-            Já tem conta? <Link href="/login" className="text-blue-600 hover:underline">Faça Login</Link>
+            <Button className="w-full" type="submit">
+              <UserPlus className="mr-2 h-4 w-4" />
+              Continuar
+            </Button>
+          </form>          
+
+          <div className="mt-8 text-center text-sm font-medium">
+            Já tem conta? <Link href="/login" className="text-(--main-color) hover:underline">Faça Login</Link>            
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }
+
+

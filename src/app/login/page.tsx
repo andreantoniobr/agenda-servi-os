@@ -91,11 +91,11 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <div className="mt-8 text-center text-sm">
+          <div className="mt-8 text-center text-sm font-medium">
             Não tem conta?{" "}
             <Link
               href="/register"
-              className="text-(--main-color) hover:underline font-medium"
+              className="text-(--main-color) hover:underline"
             >
               Inscreva-se
             </Link>

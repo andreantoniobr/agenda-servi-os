@@ -1,71 +1,92 @@
 # Agenda de Serviços - Projeto Fullstack Next.js
 
-📝 **Descrição**
+## Equipe
 
-Aplicação de agendamento de serviços, desenvolvida com Next.js, TypeScript, Tailwind CSS e HeroUI/NextUI.
+* Ana Clara Meireles
+* André Antônio Bezerra
+* Raimundo Nonato
 
-O projeto possui:
+## Descrição
 
-- Cadastro e login de usuários com autenticação via JWT
-- Dashboard do usuário
-- CRUD completo para Usuários, Profissionais e Agendamentos
-- Rotas protegidas com middleware de autenticação
-- Estrutura de API pronta para integração com MongoDB Atlas
+Aplicação de agendamento de serviços, desenvolvida com Next.js, TypeScript, Tailwind CSS e ShadCN/UI.
+O sistema permite o cadastro e login de usuários, gerenciamento de profissionais e agendamentos, oferecendo uma interface intuitiva e rotas protegidas por autenticação.
 
-🚀 **Tecnologias utilizadas**
+## Tecnologias
 
-- Next.js (App Router / TypeScript)
-- Tailwind CSS
-- HeroUI / NextUI
-- MongoDB Atlas (via Mongoose)
-- JWT para autenticação
-- bcryptjs para hash de senha
+* Next.js 14+ (App Router / TypeScript)
+* MongoDB Atlas & Mongoose
+* Tailwind CSS & ShadCN/UI
+* NextAuth.js (Auth.js) 
+* bcryptjs para hash de senha
 
-📂 **Estrutura de pastas**
+## Funcionalidades
+
+* [x] Cadastro e Login de Usuários
+* [x] CRUD completo de Agendamentos
+* [x] Dashboard do usuário com visualização de agendamentos
+* [x] Rotas protegidas
+* [x] Integração com MongoDB Atlas
+
+## Estrutura de Pastas
 
 /app
 /api
 /usuarios
-route.ts # CRUD de usuários
-/login
-route.ts # Login com JWT
+route.ts        # CRUD de usuários
 /profissionais
-route.ts # CRUD de profissionais
+route.ts        # CRUD de profissionais
 /agendamentos
-route.ts # CRUD de agendamentos
+route.ts        # CRUD de agendamentos
 /cadastro
-page.tsx # Página de cadastro
+page.tsx          # Página de cadastro
 /login
-page.tsx # Página de login
+page.tsx          # Página de login
 /dashboard
-page.tsx # Dashboard do usuário
+page.tsx          # Dashboard do usuário
 /components
-Navbar.tsx # Navbar reutilizável
+Navbar.tsx           # Navbar reutilizável
 layout.tsx
 loading.tsx
 not-found.tsx
 /lib
-mongodb.ts # Conexão com MongoDB
-auth.ts # Funções de geração de token JWT
-authMiddleware.ts # Middleware de autenticação
+mongodb.ts           # Conexão com MongoDB
+auth.ts              # Funções de geração de token JWT
+authMiddleware.ts    # Middleware de autenticação
 /models
 usuario.ts
 profissional.ts
 agendamento.ts
-.env.local # Variáveis de ambiente (não subir valores sensíveis)
+.env.local             # Variáveis de ambiente (não subir valores sensíveis)
 
+## Configuração do Ambiente
 
-⚙️ **Configuração do ambiente**
+1. Clone o repositório:
 
-1. Instalar dependências:
+```bash
+git clone https://github.com/andreantoniobr/agenda-servi-os
+```
+
+2. Instale as dependências:
 
 ```bash
 npm install
+```
 
-Criar arquivo .env.local na raiz do projeto com as variáveis:
+3. Crie o arquivo `.env.local` na raiz do projeto com as variáveis:
+
+```
 MONGODB_URI=COLE_SUA_URI_AQUI
-JWT_SECRET=COLE_UMA_CHAVE_SECRETA
+NEXTAUTH_SECRET=COLE_UMA_CHAVE_SECRETA
 NEXTAUTH_URL=http://localhost:3000
+```
 
-Rodar o projeto localmente:
+4. Rode o projeto localmente:
+
+```bash
 npm run dev
+```
+
+## Deploy
+
+O projeto está disponível no seguinte link:
+[Acesse o projeto aqui](https://agenda-servi-os.vercel.app/)
