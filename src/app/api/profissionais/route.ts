@@ -1,47 +1,43 @@
 import { NextRequest, NextResponse } from "next/server";
-import { connectDB } from "@/lib/mongodb";
-import Agendamento from "@/models/agendamento";
-import { authMiddleware } from "@/lib/authMiddleware";
+import { connectDB } from "@/src/lib/mongodb";
+import Profissional from "@/src/models/profissional";
+import { authMiddleware } from "@/src/lib/authMiddleware";
 
-// GET – listar agendamentos (protegido)
 export async function GET(req: NextRequest) {
   const middlewareResponse = authMiddleware(req);
   if (middlewareResponse) return middlewareResponse;
 
   await connectDB();
-  const agendamentos = await Agendamento.find();
-  return NextResponse.json(agendamentos);
+  const profissionais = await Profissional.find();
+  return NextResponse.json(profissionais);
 }
 
-// POST – criar agendamento (protegido)
 export async function POST(req: NextRequest) {
   const middlewareResponse = authMiddleware(req);
   if (middlewareResponse) return middlewareResponse;
 
   await connectDB();
   const data = await req.json();
-  const novoAgendamento = await Agendamento.create(data);
-  return NextResponse.json(novoAgendamento);
+  const novoProfissional = await Profissional.create(data);
+  return NextResponse.json(novoProfissional);
 }
 
-// PATCH – atualizar agendamento (protegido)
 export async function PATCH(req: NextRequest) {
   const middlewareResponse = authMiddleware(req);
   if (middlewareResponse) return middlewareResponse;
 
   await connectDB();
   const { id, ...rest } = await req.json();
-  const agendamento = await Agendamento.findByIdAndUpdate(id, rest, { new: true });
-  return NextResponse.json(agendamento);
+  const profissional = await Profissional.findByIdAndUpdate(id, rest, { new: true });
+  return NextResponse.json(profissional);
 }
 
-// DELETE – remover agendamento (protegido)
 export async function DELETE(req: NextRequest) {
   const middlewareResponse = authMiddleware(req);
   if (middlewareResponse) return middlewareResponse;
 
   await connectDB();
   const { id } = await req.json();
-  await Agendamento.findByIdAndDelete(id);
-  return NextResponse.json({ message: "Agendamento deletado" });
+  await Profissional.findByIdAndDelete(id);
+  return NextResponse.json({ message: "Profissional deletado" });
 }

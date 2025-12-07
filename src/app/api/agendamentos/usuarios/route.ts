@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { connectDB } from "@/lib/mongodb";
-import Usuario from "@/models/usuario";
-import { authMiddleware } from "@/lib/authMiddleware";
+import { connectDB } from "@/src/lib/mongodb";
+import Usuario from "@/src/models/usuario";
+import { authMiddleware } from "@/src/lib/authMiddleware";
 
 // GET – listar usuários (protegido)
 export async function GET(req: NextRequest) {
